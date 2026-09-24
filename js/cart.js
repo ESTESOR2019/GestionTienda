@@ -80,5 +80,5 @@ function sendWhatsAppOrder() {
     const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     message += `\n*Total Estimado:* $${total.toLocaleString('es-AR')}\n\n¿Tienen stock disponible?`;
 
-    window.open(`https://wa.me/5491160362998?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/5491159238022?text=${encodeURIComponent(message)}`, '_blank');
 }
