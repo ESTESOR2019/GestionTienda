@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIBBOR - Estilo y Elegancia</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Font Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            850: '#064e3b',
+                            900: '#022c22',
+                            950: '#011c16',
+                        },
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .backdrop-blur-custom {
+            backdrop-filter: blur(12px);
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 20% 80%, rgba(202, 138, 4, 0.1) 0%, transparent 40%);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between selection:bg-emerald-800 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer flex items-center gap-3" onclick="navigateTo('inicio')">
+                    <div class="w-10 h-10 rounded-full bg-emerald-900 flex items-center justify-center text-amber-400 font-serif font-bold text-xl shadow-md border border-amber-500/30">
+                        G
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl font-bold tracking-tight text-emerald-950 block leading-none">GIBBOR</span>
+                        <span class="text-[9px] tracking-[0.25em] text-amber-700 font-semibold uppercase block mt-1">Estilo y Elegancia</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-8 font-medium text-sm">
+                    <button onclick="navigateTo('inicio')" id="nav-inicio" class="nav-btn text-emerald-900 border-b-2 border-emerald-800 px-1 py-1 transition-colors">
+                        Inicio
+                    </button>
+                    <button onclick="navigateTo('productos')" id="nav-productos" class="nav-btn text-slate-600 hover:text-emerald-800 border-b-2 border-transparent hover:border-emerald-800/40 px-1 py-1 transition-colors">
+                        Productos
+                    </button>
+                    <button onclick="navigateTo('politicas')" id="nav-politicas" class="nav-btn text-slate-600 hover:text-emerald-800 border-b-2 border-transparent hover:border-emerald-800/40 px-1 py-1 transition-colors">
+                        Políticas
+                    </button>
+                </nav>
+
+                <!-- Action Icons (Cart & Mobile Menu) -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleCartModal()" class="relative p-2.5 text-slate-700 hover:text-emerald-900 transition-colors rounded-full hover:bg-slate-100 focus:outline-none" aria-label="Carrito de compras">
+                        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                        <span id="cart-badge" class="hidden absolute -top-1 -right-1 bg-amber-500 text-emerald-950 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white shadow-sm">
+                            0
+                        </span>
+                    </button>
+
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 hover:text-emerald-900 focus:outline-none" aria-label="Menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="navigateTo('inicio'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-emerald-900 hover:bg-slate-50">
+                Inicio
+            </button>
+            <button onclick="navigateTo('productos'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-emerald-900 hover:bg-slate-50">
+                Productos
+            </button>
+            <button onclick="navigateTo('politicas'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-emerald-900 hover:bg-slate-50">
+                Políticas
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+        
+        <!-- PAGE 1: INICIO (HOME) -->
+        <section id="page-inicio" class="page-view animate-fade-in">
+            <!-- Hero Section -->
+            <div class="relative bg-gradient-to-b from-emerald-50/60 via-slate-50 to-slate-50 py-16 md:py-24 hero-pattern overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        
+                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left z-10">
+                            <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-widest rounded-full border border-emerald-200">
+                                Colección Exclusiva
+                            </span>
+                            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-emerald-950 tracking-tight leading-tight">
+                                Vestí tu poder con <br class="hidden sm:inline"><span class="italic text-emerald-800">estilo & elegancia</span>
+                            </h1>
+                            <p class="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                                Prendas seleccionadas con diseños exclusivos para destacar en cada momento. Elegí tus piezas favoritas y coordiná tu pago y envío fácilmente vía WhatsApp.
+                            </p>
+                            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                                <button onclick="navigateTo('productos')" class="w-full sm:w-auto px-8 py-3.5 bg-emerald-900 hover:bg-emerald-950 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group">
+                                    <span>Ir al catálogo</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                                </button>
+                                <a href="https://wa.me/5491112345678?text=Hola%20GIBBOR,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-slate-50 text-emerald-900 font-medium rounded-full border border-slate-300 hover:border-emerald-800 shadow-sm transition-all duration-300 flex items-center justify-center gap-2">
+                                    <i data-lucide="message-circle" class="w-4 h-4 text-emerald-700"></i>
+                                    <span>Escribinos por WhatsApp</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Hero Decorative Graphic / Image Slider Mock -->
+                        <div class="lg:col-span-5 relative flex justify-center">
+                            <div class="relative w-full max-w-md aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-200">
+                                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800" alt="GIBBOR Moda Hero" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/60 via-transparent to-transparent"></div>
+                                <div class="absolute bottom-6 left-6 right-6 text-white">
+                                    <p class="text-xs uppercase tracking-widest text-amber-300 font-semibold">Nueva Temporada</p>
+                                    <p class="font-serif text-xl font-bold">Diseños Sofisticados & Minimalistas</p>
+                                </div>
+                            </div>
+                            <!-- Floating decorative badge -->
+                            <div class="absolute -bottom-6 -left-6 bg-white/95 backdrop-blur border border-slate-100 p-4 rounded-xl shadow-xl hidden sm:flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center">
+                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-900">Garantía de Calidad</p>
+                                    <p class="text-[11px] text-slate-500">Telas de alta gama</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Categories Highlights -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="font-serif text-3xl font-bold text-emerald-950">Categorías Destacadas</h2>
+                    <div class="w-12 h-1 bg-amber-500 mx-auto mt-3 rounded-full"></div>
+                    <p class="text-slate-600 mt-3 text-sm">Explorá nuestras colecciones pensadas para vos</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Category Card 1 -->
+                    <div onclick="filterByCategory('Remeras')" class="group cursor-pointer relative h-80 rounded-2xl overflow-hidden shadow-md">
+                        <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Remeras & Tops">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-emerald-950/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <h3 class="font-serif text-2xl font-bold">Remeras & Tops</h3>
+                            <span class="text-xs text-amber-300 font-medium flex items-center gap-1 mt-1 group-hover:translate-x-1 transition-transform">
+                                Ver colección <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Category Card 2 -->
+                    <div onclick="filterByCategory('Vestidos')" class="group cursor-pointer relative h-80 rounded-2xl overflow-hidden shadow-md">
+                        <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Vestidos">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-emerald-950/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <h3 class="font-serif text-2xl font-bold">Vestidos Elegantes</h3>
+                            <span class="text-xs text-amber-300 font-medium flex items-center gap-1 mt-1 group-hover:translate-x-1 transition-transform">
+                                Ver colección <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Category Card 3 -->
+                    <div onclick="filterByCategory('Camperas')" class="group cursor-pointer relative h-80 rounded-2xl overflow-hidden shadow-md sm:col-span-2 lg:col-span-1">
+                        <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Camperas">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-emerald-950/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <h3 class="font-serif text-2xl font-bold">Camperas & Abrigos</h3>
+                            <span class="text-xs text-amber-300 font-medium flex items-center gap-1 mt-1 group-hover:translate-x-1 transition-transform">
+                                Ver colección <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: PRODUCTOS (CATALOG) -->
+        <section id="page-productos" class="page-view hidden animate-fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                
+                <!-- Catalog Title & Subtitle -->
+                <div class="mb-8">
+                    <h1 class="font-serif text-3xl sm:text-4xl font-bold text-emerald-950">Nuestro catálogo</h1>
+                    <p id="products-count" class="text-slate-500 text-sm mt-1">Cargando productos...</p>
+                </div>
+
+                <!-- Filters & Search Bar Card -->
+                <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                        
+                        <!-- Search input -->
+                        <div class="md:col-span-5">
+                            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Buscar</label>
+                            <div class="relative">
+                                <input type="text" id="search-input" oninput="applyFilters()" placeholder="Nombre o código..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-800/30 focus:border-emerald-800 transition-all">
+                                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Category -->
+                        <div class="md:col-span-3">
+                            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Categoría</label>
+                            <select id="category-select" onchange="applyFilters()" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-800/30 focus:border-emerald-800 transition-all">
+                                <option value="Todas">Todas</option>
+                                <option value="Remeras">Remeras</option>
+                                <option value="Vestidos">Vestidos</option>
+                                <option value="Pantalones">Pantalones</option>
+                                <option value="Camperas">Camperas</option>
+                                <option value="Tops">Tops</option>
+                                <option value="Calzados">Calzados</option>
+                                <option value="Accesorios">Accesorios</option>
+                            </select>
+                        </div>
+
+                        <!-- Dropdown Size -->
+                        <div class="md:col-span-2">
+                            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Talle</label>
+                            <select id="size-select" onchange="applyFilters()" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-800/30 focus:border-emerald-800 transition-all">
+                                <option value="Todos">Todos</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                        </div>
+
+                        <!-- Reset Button -->
+                        <div class="md:col-span-2 flex items-end">
+                            <button onclick="resetFilters()" class="w-full py-2.5 px-4 bg-emerald-900 hover:bg-emerald-950 text-white text-sm font-medium rounded-xl transition-all shadow-sm">
+                                Filtrar / Limpiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Horizontal Pill Category Shortcuts -->
+                    <div class="flex items-center gap-2 overflow-x-auto pt-4 mt-4 border-t border-slate-100 no-scrollbar" id="category-pills">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Products rendered dynamically -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="no-products" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200">
+                    <i data-lucide="package-x" class="w-12 h-12 text-slate-300 mx-auto mb-3"></i>
+                    <h3 class="text-lg font-bold text-slate-700">No se encontraron productos</h3>
+                    <p class="text-sm text-slate-500 mt-1">Intentá ajustando los filtros de búsqueda.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PAGE 3: POLÍTICAS (POLICIES) -->
+        <section id="page-politicas" class="page-view hidden animate-fade-in">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                
+                <div class="text-center mb-10">
+                    <h1 class="font-serif text-3xl sm:text-4xl font-bold text-emerald-950">Políticas de compra</h1>
+                    <div class="w-12 h-1 bg-amber-500 mx-auto mt-3 rounded-full"></div>
+                    <p class="text-slate-600 mt-2 text-sm">Transparencia y atención personalizada en cada pedido</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Main Policy Card -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-emerald-900"></div>
+                        <h3 class="text-xl font-serif font-bold text-emerald-950 mb-3">¿Cómo realizo mi compra?</h3>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            Seleccioná las prendas que más te gusten agregándolas al carrito. Una vez completada tu selección, hacé clic en <strong>"Coordinar pedido por WhatsApp"</strong>. Te redirigiremos automáticamente a un chat directo con nuestro equipo donde confirmaremos talles, stock disponible, método de pago y detalles del envío.
+                        </p>
+                    </div>
+
+                    <!-- Policy Info Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Shipping -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-900 flex items-center justify-center mb-4">
+                                <i data-lucide="truck" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg mb-2">Envíos & Entregas</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Realizamos envíos a todo el país a través de Correo Argentino y cadetería privada en zonas seleccionadas. Los tiempos de entrega estimados son de 2 a 5 días hábiles.
+                            </p>
+                        </div>
+
+                        <!-- Payment -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-900 flex items-center justify-center mb-4">
+                                <i data-lucide="credit-card" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg mb-2">Formas de Pago</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Aceptamos transferencias bancarias (con descuento especial), tarjetas de crédito/débito y efectivo al momento del retiro presencial en nuestro showroom.
+                            </p>
+                        </div>
+
+                        <!-- Changes -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-900 flex items-center justify-center mb-4">
+                                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg mb-2">Cambios y Devoluciones</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Podés solicitar el cambio de tus prendas dentro de los 15 días posteriores a la recepción del pedido. Las prendas deben encontrarse sin uso, con etiquetas y en su envoltorio original.
+                            </p>
+                        </div>
+
+                        <!-- Direct Contact -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
+                                <i data-lucide="help-circle" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg mb-2">Atención Personalizada</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                ¿Tenés dudas sobre las medidas o telas? Escribinos directamente y te asesoramos para que elijas la prenda idónea.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- WhatsApp Banner CTA -->
+                    <div class="mt-8 text-center bg-gradient-to-r from-emerald-950 to-emerald-900 text-white p-8 rounded-2xl shadow-md">
+                        <h3 class="font-serif text-2xl font-bold mb-2">¿Tenés alguna duda puntual?</h3>
+                        <p class="text-emerald-100 text-sm mb-6 max-w-lg mx-auto">Estamos disponibles para responder tus consultas al instante.</p>
+                        <a href="https://wa.me/5491112345678?text=Hola%20GIBBOR,%20tengo%20una%20consulta%20sobre%20las%20politicas" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold rounded-full transition-colors text-sm shadow-md">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>Escribinos por WhatsApp</span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SHOPPING CART DRAWER / MODAL -->
+    <div id="cart-modal" class="fixed inset-0 z-50 hidden overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div onclick="toggleCartModal()" class="fixed inset-0 bg-slate-900/60 transition-opacity backdrop-blur-sm"></div>
+
+        <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
+                
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-emerald-900"></i>
+                        <h2 class="font-serif text-xl font-bold text-slate-900" id="slide-over-title">Tu Carrito</h2>
+                    </div>
+                    <button onclick="toggleCartModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-200/60 transition-colors">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cart-items-container">
+                    <!-- Items rendered dynamically -->
+                </div>
+
+                <!-- Cart Footer / Summary -->
+                <div class="p-6 border-t border-slate-100 bg-slate-50/80 space-y-4">
+                    <div class="space-y-1.5 text-sm">
+                        <div class="flex justify-between text-slate-600">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal" class="font-semibold">$0</span>
+                        </div>
+                        <div class="flex justify-between text-slate-600">
+                            <span>Envío</span>
+                            <span class="text-xs text-emerald-800 font-medium">A coordinar por WA</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-slate-900 pt-2 border-t border-slate-200">
+                            <span>Total Estimado</span>
+                            <span id="cart-total" class="text-emerald-900">$0</span>
+                        </div>
+                    </div>
+
+                    <button id="whatsapp-checkout-btn" onclick="sendWhatsAppOrder()" class="w-full py-3.5 bg-emerald-900 hover:bg-emerald-950 text-white font-medium rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="message-square" class="w-5 h-5 text-amber-400"></i>
+                        <span>Coordinar pedido por WhatsApp</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-emerald-950 text-slate-300 border-t border-emerald-900 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Brand Info -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-emerald-900 flex items-center justify-center text-amber-400 font-serif font-bold text-lg border border-amber-500/30">
+                            G
+                        </div>
+                        <span class="font-serif text-xl font-bold text-white tracking-wider">GIBBOR</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Prendas seleccionadas con atención al detalle para brindarte un estilo sofisticado en cada ocasión.
+                    </p>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Contacto</h4>
+                    <p class="text-sm text-slate-300">WhatsApp: Coordinamos tu compra directa</p>
+                    <p class="text-sm text-slate-400">Atención: Lunes a Sábado de 9:00 a 19:00 hs</p>
+                </div>
+
+                <!-- Quick Navigation Links -->
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Tienda</h4>
+                    <ul class="space-y-1 text-sm">
+                        <li><button onclick="navigateTo('productos')" class="hover:text-amber-400 transition-colors">Catálogo completo</button></li>
+                        <li><button onclick="toggleCartModal()" class="hover:text-amber-400 transition-colors">Mi carrito</button></li>
+                        <li><button onclick="navigateTo('politicas')" class="hover:text-amber-400 transition-colors">Políticas de compra</button></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-emerald-900/80 mt-10 pt-6 text-center text-xs text-slate-500">
+                <p>&copy; 2026 GIBBOR. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Store (Catalog)
+        const products = [
+            {
+                id: 'GB-01',
+                name: 'Top Malla Transparente Draped',
+                category: 'Tops',
+                sizes: ['S', 'M'],
+                price: 18500,
+                image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'GB-02',
+                name: 'Vestido Midi Espalda Descubierta',
+                category: 'Vestidos',
+                sizes: ['S', 'M', 'L'],
+                price: 34900,
+                image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'GB-03',
+                name: 'Top Strapless Ruffle Blanco',
+                category: 'Tops',
+                sizes: ['S', 'M'],
+                price: 16200,
+                image: 'https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'GB-04',
+                name: 'Bustier Elegance Negro',
+                category: 'Tops',
+                sizes: ['S', 'M', 'L'],
+                price: 21000,
+                image: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'GB-05',
+                name: 'Remera Cotton Soft Minimal',
+                category: 'Remeras',
+                sizes: ['S', 'M', 'L', 'XL'],
+                price: 14500,
+                image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'GB-06',
+                name: 'Pantalón Tailored Emerald Fit',
+                category: 'Pantalones',
+                sizes: ['M', 'L'],
+                price: 28900,
+                image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'GB-07',
+                name: 'Campera Leather Look Black',
+                category: 'Camperas',
+                sizes: ['M', 'L', 'XL'],
+                price: 45000,
+                image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'GB-08',
+                name: 'Sandalias Minimal Gold Accent',
+                category: 'Calzados',
+                sizes: ['37', '38', '39'],
+                price: 32000,
+                image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=600'
+            }
+        ];
+
+        // Categories list
+        const categories = ['Todas', 'Remeras', 'Vestidos', 'Pantalones', 'Camperas', 'Tops', 'Calzados', 'Accesorios'];
+
+        // App State
+        let cart = [];
+        let currentCategory = 'Todas';
+
+        // SPA Navigation Function
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.add('hidden');
+            });
+
+            // Show selected page
+            const activePage = document.getElementById(`page-${pageId}`);
+            if (activePage) {
+                activePage.classList.remove('hidden');
+            }
+
+            // Update Nav Buttons Active State
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-900', 'border-emerald-800');
+                btn.classList.add('text-slate-600', 'border-transparent');
+            });
+
+            const activeBtn = document.getElementById(`nav-${pageId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('text-emerald-900', 'border-emerald-800');
+                activeBtn.classList.remove('text-slate-600', 'border-transparent');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Toggle Cart Modal
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Render Category Pills Shortcuts
+        function renderCategoryPills() {
+            const container = document.getElementById('category-pills');
+            container.innerHTML = categories.map(cat => {
+                const isActive = cat === currentCategory;
+                return `
+                    <button onclick="filterByCategory('${cat}')" class="px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                        isActive 
+                        ? 'bg-emerald-900 text-amber-300 shadow-sm' 
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Filter by Category Shortcut
+        function filterByCategory(category) {
+            currentCategory = category;
+            document.getElementById('category-select').value = category;
+            renderCategoryPills();
+            applyFilters();
+            navigateTo('productos');
+        }
+
+        // Filter & Search Products
+        function applyFilters() {
+            const searchValue = document.getElementById('search-input').value.toLowerCase().trim();
+            const selectedCategory = document.getElementById('category-select').value;
+            const selectedSize = document.getElementById('size-select').value;
+
+            currentCategory = selectedCategory;
+            renderCategoryPills();
+
+            const filtered = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchValue) || product.id.toLowerCase().includes(searchValue);
+                const matchesCategory = selectedCategory === 'Todas' || product.category === selectedCategory;
+                const matchesSize = selectedSize === 'Todos' || product.sizes.includes(selectedSize);
+
+                return matchesSearch && matchesCategory && matchesSize;
+            });
+
+            renderProducts(filtered);
+        }
+
+        // Reset Filters
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('category-select').value = 'Todas';
+            document.getElementById('size-select').value = 'Todos';
+            currentCategory = 'Todas';
+            renderCategoryPills();
+            renderProducts(products);
+        }
+
+        // Render Products Grid
+        function renderProducts(productList) {
+            const grid = document.getElementById('products-grid');
+            const noProductsMsg = document.getElementById('no-products');
+            const countLabel = document.getElementById('products-count');
+
+            countLabel.textContent = `${productList.length} prendas encontradas`;
+
+            if (productList.length === 0) {
+                grid.innerHTML = '';
+                noProductsMsg.classList.remove('hidden');
+                return;
+            }
+
+            noProductsMsg.classList.add('hidden');
+
+            grid.innerHTML = productList.map(p => `
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-slate-100">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider text-slate-700 uppercase">
+                            ${p.id}
+                        </span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <span class="text-[11px] font-semibold text-amber-700 uppercase tracking-wider">${p.category}</span>
+                            <h3 class="font-serif font-bold text-slate-900 text-base leading-snug hover:text-emerald-900 transition-colors">${p.name}</h3>
+                            <div class="flex gap-1.5 mt-2">
+                                ${p.sizes.map(s => `<span class="text-[10px] font-medium px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md border border-slate-200">${s}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                            <span class="font-bold text-emerald-950 text-lg">$${p.price.toLocaleString('es-AR')}</span>
+                            <button onclick="addToCart('${p.id}')" class="px-3.5 py-2 bg-emerald-900 hover:bg-emerald-950 text-white rounded-xl text-xs font-medium transition-all shadow-sm flex items-center gap-1.5">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                <span>Agregar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-initialize icons for newly added HTML content
+            lucide.createIcons();
+        }
+
+        // Add item to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            toggleCartModal();
+        }
+
+        // Update Cart Quantity
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+
+            item.quantity += delta;
+
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+            }
+
+            updateCartUI();
+        }
+
+        // Update Cart Interface
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const totalEl = document.getElementById('cart-total');
+
+            // Total Count
+            const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+            if (totalCount > 0) {
+                badge.textContent = totalCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            // Render Empty Cart or Items
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400 space-y-3">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto stroke-1"></i>
+                        <p class="text-sm">Tu carrito está vacío.</p>
+                        <button onclick="toggleCartModal(); navigateTo('productos')" class="text-xs font-semibold text-emerald-800 hover:underline">
+                            Explorar catálogo
+                        </button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-slate-800 text-xs">${item.name}</h4>
+                            <p class="text-[11px] text-slate-500 font-medium">$${item.price.toLocaleString('es-AR')}</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="updateQuantity('${item.id}', -1)" class="w-5 h-5 rounded bg-white border border-slate-300 text-slate-600 flex items-center justify-center text-xs font-bold hover:bg-slate-100">-</button>
+                                <span class="text-xs font-bold text-slate-700">${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.id}', 1)" class="w-5 h-5 rounded bg-white border border-slate-300 text-slate-600 flex items-center justify-center text-xs font-bold hover:bg-slate-100">+</button>
+                            </div>
+                        </div>
+                        <span class="font-bold text-emerald-950 text-sm">$${(item.price * item.quantity).toLocaleString('es-AR')}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Calculate Subtotal & Total
+            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            subtotalEl.textContent = `$${total.toLocaleString('es-AR')}`;
+            totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
+
+            lucide.createIcons();
+        }
+
+        // Send Order via WhatsApp
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert('Agregá al menos una prenda al carrito antes de coordinar.');
+                return;
+            }
+
+            let message = 'Hola GIBBOR! Quisiera coordinar el pedido de los siguientes productos:\n\n';
+            cart.forEach(item => {
+                message += `• ${item.name} (${item.id}) x${item.quantity} - $${(item.price * item.quantity).toLocaleString('es-AR')}\n`;
+            });
+
+            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            message += `\n*Total Estimado:* $${total.toLocaleString('es-AR')}\n\n¿Tienen stock disponible para coordinar pago y envío?`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/5491112345678?text=${encodedMessage}`, '_blank');
+        }
+
+        // On Load Initializers
+        window.onload = function() {
+            lucide.createIcons();
+            renderCategoryPills();
+            renderProducts(products);
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
