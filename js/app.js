@@ -1,5 +1,7 @@
 
 
+// js/app.js
+
 let currentCategory = 'Todas';
 
 function navigateTo(pageId) {
@@ -22,15 +24,19 @@ function navigateTo(pageId) {
 }
 
 function toggleMobileMenu() {
-    document.getElementById('mobile-menu').classList.toggle('hidden');
+    const menu = document.getElementById('mobile-menu');
+    if (menu) menu.classList.toggle('hidden');
 }
 
 function toggleCartModal() {
-    document.getElementById('cart-modal').classList.toggle('hidden');
+    const modal = document.getElementById('cart-modal');
+    if (modal) modal.classList.toggle('hidden');
 }
 
 function renderCategoryPills() {
     const container = document.getElementById('category-pills');
+    if (!container || typeof categories === 'undefined') return;
+
     container.innerHTML = categories.map(cat => `
         <button onclick="filterByCategory('${cat}')" class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
             cat === currentCategory ? 'bg-emerald-900 text-amber-300' : 'bg-slate-100 text-slate-600'
@@ -42,16 +48,24 @@ function renderCategoryPills() {
 
 function filterByCategory(category) {
     currentCategory = category;
-    document.getElementById('category-select').value = category;
+    const categorySelect = document.getElementById('category-select');
+    if (categorySelect) categorySelect.value = category;
+
     renderCategoryPills();
     applyFilters();
     navigateTo('productos');
 }
 
 function applyFilters() {
-    const searchValue = document.getElementById('search-input').value.toLowerCase().trim();
-    const selectedCategory = document.getElementById('category-select').value;
-    const selectedSize = document.getElementById('size-select').value;
+    if (typeof products === 'undefined') return;
+
+    const searchInput = document.getElementById('search-input');
+    const categorySelect = document.getElementById('category-select');
+    const sizeSelect = document.getElementById('size-select');
+
+    const searchValue = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const selectedCategory = categorySelect ? categorySelect.value : 'Todas';
+    const selectedSize = sizeSelect ? sizeSelect.value : 'Todos';
 
     currentCategory = selectedCategory;
     renderCategoryPills();
@@ -68,12 +82,20 @@ function applyFilters() {
 }
 
 function resetFilters() {
-    document.getElementById('search-input').value = '';
-    document.getElementById('category-select').value = 'Todas';
-    document.getElementById('size-select').value = 'Todos';
+    const searchInput = document.getElementById('search-input');
+    const categorySelect = document.getElementById('category-select');
+    const sizeSelect = document.getElementById('size-select');
+
+    if (searchInput) searchInput.value = '';
+    if (categorySelect) categorySelect.value = 'Todas';
+    if (sizeSelect) sizeSelect.value = 'Todos';
+
     currentCategory = 'Todas';
     renderCategoryPills();
-    renderProducts(products);
+
+    if (typeof products !== 'undefined') {
+        renderProducts(products);
+    }
 }
 
 function renderProducts(productList) {
@@ -81,15 +103,19 @@ function renderProducts(productList) {
     const noProductsMsg = document.getElementById('no-products');
     const countLabel = document.getElementById('products-count');
 
-    countLabel.textContent = `${productList.length} prendas encontradas`;
+    if (!grid) return;
+
+    if (countLabel) {
+        countLabel.textContent = `${productList.length} prendas encontradas`;
+    }
 
     if (productList.length === 0) {
         grid.innerHTML = '';
-        noProductsMsg.classList.remove('hidden');
+        if (noProductsMsg) noProductsMsg.classList.remove('hidden');
         return;
     }
 
-    noProductsMsg.classList.add('hidden');
+    if (noProductsMsg) noProductsMsg.classList.add('hidden');
 
     grid.innerHTML = productList.map(p => `
         <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm flex flex-col justify-between group">
@@ -114,12 +140,24 @@ function renderProducts(productList) {
         </div>
     `).join('');
 
-    lucide.createIcons();
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 }
 
-window.onload = function() {
-    lucide.createIcons();
+// Inicialización segura de la aplicación
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     renderCategoryPills();
-    renderProducts(products);
-    updateCartUI();
-};
+
+    if (typeof products !== 'undefined') {
+        renderProducts(products);
+    }
+
+    if (typeof updateCartUI === 'function') {
+        updateCartUI();
+    }
+});
