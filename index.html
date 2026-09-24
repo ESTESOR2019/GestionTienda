@@ -87,23 +87,45 @@
         </div>
     </header>
 
-    <!-- PWA Install Banner Minimalista -->
-    <div id="pwa-install-banner" class="hidden bg-emerald-950 text-white px-4 py-3 border-b border-emerald-800 transition-all">
-        <div class="max-w-7xl mx-auto flex items-center justify-between text-xs sm:text-sm">
-            <div class="flex items-center gap-2">
-                <i data-lucide="smartphone" class="w-4 h-4 text-amber-400"></i>
-                <span>Instalá la app de <strong>GIBBOR</strong> para acceder más rápido.</span>
-            </div>
-            <div class="flex items-center gap-3">
-                <button onclick="installPWA()" class="px-3.5 py-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold rounded-full transition-colors text-xs shadow-sm">
-                    Instalar
+  <!-- PWA Install Banner Minimalista (Ya existente) -->
+<div id="pwa-install-banner" class="hidden bg-emerald-950 text-white px-4 py-3 border-b border-emerald-800 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-xs sm:text-sm">
+        <div class="flex items-center gap-2">
+            <i data-lucide="smartphone" class="w-4 h-4 text-amber-400"></i>
+            <span>Instalá la app de <strong>GIBBOR</strong> para acceder más rápido.</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="pwa-install-btn" onclick="installPWA()" class="px-3.5 py-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold rounded-full transition-colors text-xs shadow-sm">
+                Instalar
+            </button>
+            <button onclick="dismissPWAInstall()" class="text-slate-400 hover:text-white p-1">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- NUEVO: Banner de Actualización de PWA -->
+<div id="pwa-update-banner" class="hidden fixed bottom-4 right-4 z-50 bg-emerald-950 text-white px-5 py-4 rounded-2xl shadow-2xl border border-amber-500/40 max-w-sm transition-all animate-bounce-short">
+    <div class="flex items-start gap-3">
+        <div class="p-2 bg-amber-500/20 text-amber-400 rounded-xl">
+            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1">
+            <h4 class="font-bold text-sm text-amber-400">¡Nueva versión disponible!</h4>
+            <p class="text-xs text-slate-300 mt-0.5">Hay una actualización lista con mejoras en la tienda.</p>
+            <div class="flex items-center gap-2 mt-3">
+                <button id="pwa-update-btn" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold rounded-xl text-xs transition-colors shadow-sm">
+                    Actualizar ahora
                 </button>
-                <button onclick="dismissPWAInstall()" class="text-slate-400 hover:text-white p-1">
-                    <i data-lucide="x" class="w-4 h-4"></i>
+                <button onclick="document.getElementById('pwa-update-banner').classList.add('hidden')" class="px-3 py-1.5 text-slate-400 hover:text-white text-xs">
+                    Más tarde
                 </button>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Main Container -->
     <main class="flex-grow">
