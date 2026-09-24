@@ -1,8 +1,7 @@
 {
   "name": "GIBBOR - Estilo y Elegancia",
   "short_name": "GIBBOR",
-  "description": "Tienda exclusiva de moda con atención personal vía WhatsApp",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#022c22",
   "theme_color": "#022c22",

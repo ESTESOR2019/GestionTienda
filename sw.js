@@ -21,3 +21,10 @@ self.addEventListener('fetch', (e) => {
     caches.match(e.request).then((response) => response || fetch(e.request))
   );
 });
+
+// sw.js
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting(); // Fuerza al Service Worker a tomar el control sin esperar a cerrar pestañas
+  }
+});
