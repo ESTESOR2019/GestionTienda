@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation Links -->
+                <!-- Navigation Links libres para todo público -->
                 <nav class="hidden md:flex space-x-8 font-medium text-sm">
                     <button onclick="navigateTo('inicio')" id="nav-inicio" class="nav-btn text-emerald-900 border-b-2 border-emerald-800 px-1 py-1 transition-colors">
                         Inicio
@@ -55,14 +55,14 @@
                     <button onclick="navigateTo('politicas')" id="nav-politicas" class="nav-btn text-slate-600 hover:text-emerald-800 border-b-2 border-transparent hover:border-emerald-800/40 px-1 py-1 transition-colors">
                         Políticas
                     </button>
-                    <!-- Admin Link (sólo para administradores) -->
+                    <!-- Admin Link (Se habilita vía JS únicamente para administradores logueados) -->
                     <button id="nav-admin" onclick="navigateTo('admin')" class="hidden nav-btn text-amber-600 font-bold border-b-2 border-transparent hover:border-amber-600 px-1 py-1 transition-colors">
                         Admin
                     </button>
                 </nav>
 
                 <!-- Actions, Cart & User Auth -->
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-2 sm:space-x-3">
                     <button onclick="toggleCartModal()" class="relative p-2.5 text-slate-700 hover:text-emerald-900 transition-colors rounded-full hover:bg-slate-100 focus:outline-none" aria-label="Carrito">
                         <i data-lucide="shopping-bag" class="w-6 h-6"></i>
                         <span id="cart-badge" class="hidden absolute -top-1 -right-1 bg-amber-500 text-emerald-950 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white shadow-sm">
@@ -70,14 +70,14 @@
                         </span>
                     </button>
 
-                    <!-- Auth Button / Avatar -->
+                    <!-- Auth Container (Opcional) -->
                     <div id="auth-container">
-                        <button id="btn-login" onclick="openAuthModal()" class="px-4 py-2 bg-emerald-900 hover:bg-emerald-950 text-white text-xs font-bold rounded-full transition-colors">
-                            Ingresar
+                        <button id="btn-login" onclick="openAuthModal()" class="p-2 text-slate-700 hover:text-emerald-900 transition-colors rounded-full hover:bg-slate-100 flex items-center justify-center" title="Iniciar Sesión">
+                            <i data-lucide="user" class="w-6 h-6"></i>
                         </button>
+
                         <div id="user-profile" class="hidden flex items-center gap-2">
-                            <img id="user-avatar" class="w-8 h-8 rounded-full border border-amber-500" src="" alt="Avatar">
-                            <button onclick="logoutGoogle()" class="text-xs text-slate-500 hover:text-red-600 font-semibold">Salir</button>
+                            <img id="user-avatar" class="w-8 h-8 rounded-full border-2 border-amber-500 object-cover cursor-pointer" src="" alt="Avatar" onclick="logoutGoogle()" title="Hacé clic para salir">
                         </div>
                     </div>
 
@@ -105,63 +105,22 @@
         </div>
     </header>
 
-    <!-- PWA Banners -->
-    <div id="pwa-install-banner" class="hidden bg-emerald-950 text-white px-4 py-3 border-b border-emerald-800 transition-all">
-        <div class="max-w-7xl mx-auto flex items-center justify-between text-xs sm:text-sm">
-            <div class="flex items-center gap-2">
-                <i data-lucide="smartphone" class="w-4 h-4 text-amber-400"></i>
-                <span>Instalá la app de <strong>GIBBOR</strong> para acceder más rápido.</span>
-            </div>
-            <div class="flex items-center gap-3">
-                <button id="pwa-install-btn" onclick="installPWA()" class="px-3.5 py-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold rounded-full transition-colors text-xs shadow-sm">
-                    Instalar
-                </button>
-                <button onclick="dismissPWAInstall()" class="text-slate-400 hover:text-white p-1">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="pwa-update-banner" class="hidden fixed bottom-4 right-4 z-50 bg-emerald-950 text-white px-5 py-4 rounded-2xl shadow-2xl border border-amber-500/40 max-w-sm transition-all">
-        <div class="flex items-start gap-3">
-            <div class="p-2 bg-amber-500/20 text-amber-400 rounded-xl">
-                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
-            </div>
-            <div class="flex-1">
-                <h4 class="font-bold text-sm text-amber-400">¡Nueva versión disponible!</h4>
-                <p class="text-xs text-slate-300 mt-0.5">Hay una actualización lista con mejoras en la tienda.</p>
-                <div class="flex items-center gap-2 mt-3">
-                    <button id="pwa-update-btn" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold rounded-xl text-xs transition-colors shadow-sm">
-                        Actualizar ahora
-                    </button>
-                    <button onclick="document.getElementById('pwa-update-banner').classList.add('hidden')" class="px-3 py-1.5 text-slate-400 hover:text-white text-xs">
-                        Más tarde
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Container -->
     <main class="flex-grow">
-        
-        <!-- PAGE 1: INICIO -->
+        <!-- Vistas públicas de la tienda -->
         <section id="page-inicio" class="page-view animate-fade-in">
-            <!-- Contenido previo de inicio... -->
+            <!-- Contenido de inicio... -->
         </section>
 
-        <!-- PAGE 2: PRODUCTOS -->
         <section id="page-productos" class="page-view hidden animate-fade-in">
-            <!-- Contenido previo de catálogo... -->
+            <!-- Contenido de productos... -->
         </section>
 
-        <!-- PAGE 3: POLÍTICAS -->
         <section id="page-politicas" class="page-view hidden animate-fade-in">
-            <!-- Contenido previo de políticas... -->
+            <!-- Contenido de políticas... -->
         </section>
 
-        <!-- PAGE 4: ADMIN (Panel de Alta de Productos) -->
+        <!-- PAGE 4: ADMIN (Protegida) -->
         <section id="page-admin" class="page-view hidden animate-fade-in">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
@@ -213,7 +172,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- AUTH MODAL -->
@@ -226,7 +184,7 @@
                 <i data-lucide="user" class="w-6 h-6"></i>
             </div>
             <h3 class="font-serif text-xl font-bold text-slate-900 mb-2">Ingresar a GIBBOR</h3>
-            <p class="text-xs text-slate-500 mb-6">Iniciá sesión para guardar tus favoritos y gestionar compras.</p>
+            <p class="text-xs text-slate-500 mb-6">Iniciá sesión si deseas gestionar la tienda o guardar tus preferencias.</p>
             
             <button onclick="loginGoogle()" class="w-full py-3 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl font-medium text-sm text-slate-700 flex items-center justify-center gap-3 shadow-sm transition-all">
                 <svg class="w-5 h-5" viewBox="0 0 24 24">
@@ -240,7 +198,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts de la aplicación -->
     <script type="module" src="js/auth.js"></script>
     <script src="js/products.js"></script>
     <script src="js/cart.js"></script>
