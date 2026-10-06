@@ -55,13 +55,13 @@
                     <button onclick="navigateTo('politicas')" id="nav-politicas" class="nav-btn text-slate-600 hover:text-emerald-800 border-b-2 border-transparent hover:border-emerald-800/40 px-1 py-1 transition-colors">
                         Políticas
                     </button>
-                    <!-- Admin Link (Se habilita vía JS únicamente para administradores logueados) -->
-                    <button id="nav-admin" onclick="navigateTo('admin')" class="hidden nav-btn text-amber-600 font-bold border-b-2 border-transparent hover:border-amber-600 px-1 py-1 transition-colors">
+                    <!-- Admin Link visible para todos -->
+                    <button id="nav-admin" onclick="navigateTo('admin')" class="nav-btn text-amber-600 font-bold border-b-2 border-transparent hover:border-amber-600 px-1 py-1 transition-colors">
                         Admin
                     </button>
                 </nav>
 
-                <!-- Actions, Cart & User Auth -->
+                <!-- Actions & Cart -->
                 <div class="flex items-center space-x-2 sm:space-x-3">
                     <button onclick="toggleCartModal()" class="relative p-2.5 text-slate-700 hover:text-emerald-900 transition-colors rounded-full hover:bg-slate-100 focus:outline-none" aria-label="Carrito">
                         <i data-lucide="shopping-bag" class="w-6 h-6"></i>
@@ -69,17 +69,6 @@
                             0
                         </span>
                     </button>
-
-                    <!-- Auth Container (Opcional) -->
-                    <div id="auth-container">
-                        <button id="btn-login" onclick="openAuthModal()" class="p-2 text-slate-700 hover:text-emerald-900 transition-colors rounded-full hover:bg-slate-100 flex items-center justify-center" title="Iniciar Sesión">
-                            <i data-lucide="user" class="w-6 h-6"></i>
-                        </button>
-
-                        <div id="user-profile" class="hidden flex items-center gap-2">
-                            <img id="user-avatar" class="w-8 h-8 rounded-full border-2 border-amber-500 object-cover cursor-pointer" src="" alt="Avatar" onclick="logoutGoogle()" title="Hacé clic para salir">
-                        </div>
-                    </div>
 
                     <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 hover:text-emerald-900 focus:outline-none" aria-label="Menu">
                         <i data-lucide="menu" class="w-6 h-6"></i>
@@ -99,7 +88,7 @@
             <button onclick="navigateTo('politicas'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-emerald-900 hover:bg-slate-50">
                 Políticas
             </button>
-            <button id="mobile-nav-admin" onclick="navigateTo('admin'); toggleMobileMenu()" class="hidden text-amber-600 font-bold block w-full text-left px-3 py-2 rounded-md text-base hover:bg-amber-50">
+            <button id="mobile-nav-admin" onclick="navigateTo('admin'); toggleMobileMenu()" class="text-amber-600 font-bold block w-full text-left px-3 py-2 rounded-md text-base hover:bg-amber-50">
                 Administración
             </button>
         </div>
@@ -120,7 +109,7 @@
             <!-- Contenido de políticas... -->
         </section>
 
-        <!-- PAGE 4: ADMIN (Protegida) -->
+        <!-- PAGE 4: ADMIN (Libre acceso) -->
         <section id="page-admin" class="page-view hidden animate-fade-in">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
@@ -174,35 +163,14 @@
         </section>
     </main>
 
-    <!-- AUTH MODAL -->
-    <div id="auth-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl relative">
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-900">
-                <i data-lucide="user" class="w-6 h-6"></i>
-            </div>
-            <h3 class="font-serif text-xl font-bold text-slate-900 mb-2">Ingresar a GIBBOR</h3>
-            <p class="text-xs text-slate-500 mb-6">Iniciá sesión si deseas gestionar la tienda o guardar tus preferencias.</p>
-            
-            <button onclick="loginGoogle()" class="w-full py-3 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl font-medium text-sm text-slate-700 flex items-center justify-center gap-3 shadow-sm transition-all">
-                <svg class="w-5 h-5" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                <span>Continuar con Google</span>
-            </button>
-        </div>
-    </div>
-
     <!-- Scripts de la aplicación -->
-    <script type="module" src="js/auth.js"></script>
     <script src="js/products.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/app.js"></script>
     <script src="js/pwa.js"></script>
+    <script>
+        // Inicializa los íconos de Lucide
+        lucide.createIcons();
+    </script>
 </body>
 </html>
